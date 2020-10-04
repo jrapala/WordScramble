@@ -41,8 +41,26 @@ struct ContentView: View {
         // 1. Lowercase the newWord and trim
         let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
         
-        // 2. Check if there is at least one character
+        // 2a. Check if there is at least one character
         guard answer.count > 0 else {
+            return
+        }
+        
+        // 2b. Check if the word has been used already
+        guard isOriginal(word: answer) else {
+            wordError(title: "Word used already", message: "Be more original")
+            return
+        }
+        
+        // 2b. Check if the word is a possible result
+        guard isPossible(word: answer) else {
+            wordError(title: "Word not recognized", message: "You can't just make them up, you know!")
+            return
+        }
+        
+        // 2c. Check if the word is real
+        guard isReal(word: answer) else {
+            wordError(title: "Word not possible", message: "That isn't a real word.")
             return
         }
         
