@@ -67,6 +67,11 @@ struct ContentView: View {
             return
         }
         
+        guard isLongEnough(word: answer) else {
+            wordError(title: "Word is too short", message: "Word must be at least 3 letters long.")
+            return
+        }
+        
         // 3. Insert the word at beginning of usedWords
         usedWords.insert(answer, at: 0)
         
@@ -97,6 +102,10 @@ struct ContentView: View {
         let range = NSRange(location: 0, length: word.utf16.count)
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
         return misspelledRange.location == NSNotFound
+    }
+    
+    func isLongEnough(word: String) -> Bool {
+        return word.count > 2
     }
     
     func wordError(title: String, message: String) {
