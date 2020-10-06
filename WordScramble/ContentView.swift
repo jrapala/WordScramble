@@ -14,6 +14,7 @@ struct ContentView: View {
     @State private var errorTitle = ""
     @State private var errorMessage = ""
     @State private var showingError = false
+    @State private var score = 0
     
     var body: some View {
         NavigationView {
@@ -28,6 +29,8 @@ struct ContentView: View {
                     Image(systemName: "\($0.count).circle")
                     Text($0)
                 }
+                
+                Text("Score: \(score)")
             }
             .navigationBarTitle(rootWord)
             .navigationBarItems(leading: Button("New Game") {
@@ -82,6 +85,9 @@ struct ContentView: View {
         // 3. Insert the word at beginning of usedWords
         usedWords.insert(answer, at: 0)
         
+        // Calculate points
+        score = score + answer.count
+        
         // 4. Reset newWord
         newWord = ""
     }
@@ -127,6 +133,7 @@ struct ContentView: View {
     
     func startGame() {
         usedWords = [String]()
+        score = 0
 
         // 1. Find the URL for the file in our app bundle
         if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt") {
