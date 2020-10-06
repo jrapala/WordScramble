@@ -67,8 +67,15 @@ struct ContentView: View {
             return
         }
         
+        // Check if the word is at least two letters long
         guard isLongEnough(word: answer) else {
             wordError(title: "Word is too short", message: "Word must be at least 3 letters long.")
+            return
+        }
+        
+        // Check if the word is not the same as the root word
+        guard isNotTheSameAsRootWord(word: answer) else {
+            wordError(title: "Word is invalid", message: "The word cannot be the same as the root word! Nice try!")
             return
         }
         
@@ -106,6 +113,10 @@ struct ContentView: View {
     
     func isLongEnough(word: String) -> Bool {
         return word.count > 2
+    }
+    
+    func isNotTheSameAsRootWord(word: String) -> Bool {
+        return word != rootWord
     }
     
     func wordError(title: String, message: String) {
