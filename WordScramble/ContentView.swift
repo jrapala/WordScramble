@@ -30,6 +30,9 @@ struct ContentView: View {
                 }
             }
             .navigationBarTitle(rootWord)
+            .navigationBarItems(leading: Button("New Game") {
+                startGame()
+            })
         }
         .onAppear(perform: startGame)
         .alert(isPresented: $showingError) {
@@ -103,6 +106,8 @@ struct ContentView: View {
     }
     
     func startGame() {
+        usedWords = [String]()
+
         // 1. Find the URL for the file in our app bundle
         if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt") {
             // 2. Load the file into a string
