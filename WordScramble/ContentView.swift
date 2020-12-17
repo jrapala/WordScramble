@@ -24,10 +24,14 @@ struct ContentView: View {
                     .padding()
                     .autocapitalization(.none)
                 
-                List(usedWords, id: \.self) {
-                    // Add icon with word length in circle (1-50 is available)
-                    Image(systemName: "\($0.count).circle")
-                    Text($0)
+                List(usedWords, id: \.self) { word in
+                    HStack {
+                        // Add icon with word length in circle (1-50 is available)
+                        Image(systemName: "\(word.count).circle")
+                        Text(word)
+                    }
+                    .accessibilityElement(children: .ignore)
+                    .accessibility(label: Text("\(word), \(word.count) letters"))
                 }
                 
                 Text("Score: \(score)")
